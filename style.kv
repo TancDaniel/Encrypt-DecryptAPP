@@ -1,0 +1,277 @@
+WindowManager:
+    MainWindow:
+        id: main
+        name : 'main'
+    SecondWindow:
+        id: second
+        name : 'second'
+    ThirdWindow:
+        id: third
+        name : 'third'
+    ForWindow:
+        id: for
+        name : 'for'
+<MainWindow>:
+    name: "main"
+    id: main
+    GridLayout:
+        cols:1
+
+        Label:
+            text: 'Welcome to EncryptXF'
+            font_name: 'fonts/font3.otf'
+            font_size: '45dp'
+            size_hint: .5, .6
+        Image:
+            source: 'icon.png'
+            size_hint: 1, .8
+
+        GridLayout:
+            cols:2
+
+            Button:
+                text: 'Encrypt'
+                font_name: 'fonts/font1.otf'
+                font_size: '30dp'
+                background_color: 0, 1, 0, 1
+                on_release:
+                    app.root.current='second'
+                    root.manager.transition.direction="right"
+            Button:
+                font_name: 'fonts/font1.otf'
+                text: 'Decrypt'
+                font_size: '30dp'
+                background_color: 0.86, 0.06, 0.17, 1
+                on_release:
+                    app.root.current='for'
+                    root.manager.transition.direction="left"
+
+
+
+<SecondWindow>:
+    plaintext: plaintext
+    encrypt: encrypt
+    key: key
+    submited: submited
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+
+        Label:
+            font_name: 'fonts/font3.otf'
+            size_hint: .5, .2 # DACA VREI SA MICSOREZI BOXURILE PRIMA E LATIME A DOUA INALTIME
+            width: '60dp'
+            text: 'Encrypt your data here!'
+            bold: True
+            font_size: '30dp'
+        GridLayout:
+
+            cols:1
+            TextInput:
+                id: plaintext
+                on_text_validate: password.focus = True
+                write_tab: False
+                password: True
+                hint_text: 'Plaintext here'
+                font_size: '23dp'
+                multiline: True
+                background_color: 0, 0, 0, 0
+                foreground_color: 1, 1, 1, 1
+                padding_y: 20, 20
+                size_hint: 2, 2
+                canvas.after:
+                    Color:
+                        rgba: 0.2, 0.5, 0.3, 1
+                    Line:
+                        width: 2
+                        rectangle: plaintext.pos[0], plaintext.pos[1], plaintext.width, plaintext.height
+
+            Label:
+                id: encrypt
+                write_tab: False
+                text: 'Encrypted data'
+                font_size: '17dp'
+                multiline: False
+                password: True
+                background_color: 0, 0, 0, 0
+                foreground_color: 1, 1, 1, 1
+                padding_y: 20, 20
+                canvas.after:
+                    Color:
+                        rgba: 0.2, 0.5, 0.3, 1
+                    Line:
+                        width: 2
+                        rectangle: encrypt.pos[0], encrypt.pos[1], encrypt.width, encrypt.height
+            Label:
+                id: key
+                write_tab: False
+                text: 'Key'
+                font_size: '17dp'
+                password: True
+                color: .5, .2, .6, 1
+                multiline: False
+                background_color: 0, 0, 0, 0
+                foreground_color: 1, 1, 1, 1
+                padding_y: 20, 20
+                canvas.after:
+                    Color:
+                        rgba: 0.2, 0.5, 0.3, 1
+                    Line:
+                        width: 2
+                        rectangle: key.pos[0], key.pos[1], key.width, key.height
+            Label:
+                font_name: 'fonts/font3.otf'
+                id: submited
+                text: ""
+                color: 0, 1, 0, 1
+                font_size: '25dp'
+            Button:
+                font_name: 'fonts/font3.otf'
+                background_color: 1, 1, 1, 1
+                text: 'Paste Copied message'
+                font_size: '25dp'
+                on_press: root.pastetoclipboard()
+
+            Button:
+                font_name: 'fonts/font3.otf'
+                background_color: 0, 1, 0, 1
+                text: 'Encrypt'
+                font_size: '25dp'
+                on_press: root.encrypteddata()
+            Button:
+                font_name: 'fonts/font1.otf'
+                background_color: 1, 1, 1, 1
+                text: 'Copy Encrypted Plaintext/Main Menu'
+                font_size: '25dp'
+                on_press: root.copytoclipboard()
+                on_release:
+                    app.root.current='main'
+                    root.manager.transition.direction="left"
+
+<ThirdWindow>:
+    plaintext: plaintext
+    encrypt: encrypt
+#    key: key
+    submited: submited
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+
+        Label:
+            color: 1, 1, 1, 1
+            font_name: 'fonts/font3.otf'
+            size_hint: .5, .1 # DACA VREI SA MICSOREZI BOXURILE PRIMA E LATIME A DOUA INALTIME
+            width: '60dp'
+            text: 'Decrypt your data here!'
+            bold: True
+            font_size: '30dp'
+        GridLayout:
+
+            cols:1
+            Label:
+                id: plaintext
+                text: 'Decrypted text here'
+                font_size: '23dp'
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
+                background_color: 0, 0, 0, 0
+                foreground_color: 1, 1, 1, 1
+                padding_y: 20, 20
+                size_hint: 2, 2
+                canvas.after:
+                    Color:
+                        rgba: 0.2, 0.5, 0.3, 1
+                    Line:
+                        width: 2
+                        rectangle: plaintext.pos[0], plaintext.pos[1], plaintext.width, plaintext.height
+
+            TextInput:
+                id: encrypt
+                write_tab: False
+                hint_text: 'Encrypt Message'
+                font_size: '17dp'
+                multiline: False
+                password: True
+                background_color: 0, 0, 0, 0
+                foreground_color: 1, 1, 1, 1
+                padding_y: 20, 20
+                canvas.after:
+                    Color:
+                        rgba: 0.2, 0.5, 0.3, 1
+                    Line:
+                        width: 2
+                        rectangle: encrypt.pos[0], encrypt.pos[1], encrypt.width, encrypt.height
+
+            Label:
+                font_name: 'fonts/font3.otf'
+                id: submited
+                text: ""
+                font_size: '25dp'
+
+            Button:
+                font_name: 'fonts/font3.otf'
+                background_color: 1, 1, 1, 1
+                text: 'Paste Encrypted message'
+                font_size: '25dp'
+                on_press: root.pastetoclipboard()
+
+            Button:
+                font_name: 'fonts/font3.otf'
+                background_color: 1, 0, 0, 1
+                text: 'Decrypt'
+                font_size: '25dp'
+                on_press: root.dencrypteddata()
+            Button:
+                font_name: 'fonts/font1.otf'
+                background_color: 1, 1, 1, 1
+                text: 'Copy Decrypted Msg/Main Menu'
+                font_size: '25dp'
+                on_press: root.copytoclipboard()
+                on_release:
+                    app.root.current='main'
+                    root.manager.transition.direction="right"
+<ForWindow>:
+    name: "for"
+    id: for
+    welcome: welcome
+    passwordS: passwordS
+
+    GridLayout:
+
+        cols:1
+
+        Label:
+            font_name: 'fonts/font1.otf'
+            id: welcome
+            text: '-'
+            font_size: '45dp'
+        TextInput:
+            id: passwordS
+            write_tab: False
+            hint_text: 'MasterKeyX'
+            font_size: '17dp'
+            multiline: False
+            password: True
+            background_color: 0, 0, 0, 0
+            foreground_color: 1, 1, 1, 1
+            padding_y: 20, 20
+            canvas.after:
+                Color:
+                    rgba: 0.2, 0.5, 0.3, 1
+                Line:
+                    width: 2
+                    rectangle: passwordS.pos[0], passwordS.pos[1], passwordS.width, passwordS.height
+        Button:
+            font_name: 'fonts/font1.otf'
+            background_color: 0.86, 0.06, 0.17, 1
+            text: 'You shall not pass! Or? Try it if you dare.'
+            font_size: '25dp'
+            on_release:
+                root.passwordkeep()
+                root.manager.transition.direction="left"
+
+        Image:
+            source: 'icon.png'
+            allow_stretch: True
+            keep_ratio: True
